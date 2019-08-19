@@ -1,6 +1,9 @@
 const router = require('express').Router();
 
-const { getProjects } = require('../../data/models/projectsModel');
+const {
+  getProjects,
+  getProjectById,
+} = require('../../data/models/projectsModel');
 const { getTasksByProjectId } = require('../../data/models/tasksModel');
 const { getResourcesByProjectId } = require('../../data/models/resourcesModel');
 
@@ -10,6 +13,18 @@ router.get('/', async (req, res) => {
     res.status(200).json(projects);
   } catch (err) {
     res.status(500).json({ message: 'Cannot get projects' });
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await getProjectById(id);
+
+    res.status(200).json(project);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Could not get project' });
   }
 });
 
