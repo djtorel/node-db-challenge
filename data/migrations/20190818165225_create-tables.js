@@ -14,7 +14,7 @@ exports.up = function(knex) {
       tbl.string('name', 128).notNullable();
       tbl.string('description');
     })
-    .createTable('taks', tbl => {
+    .createTable('tasks', tbl => {
       tbl.increments();
       tbl.string('description').notNullable();
       tbl.string('notes');
@@ -52,4 +52,10 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {};
+exports.down = function(knex) {
+  return knex.schema
+    .dropTableIfExists('projects')
+    .dropTableIfExists('resources')
+    .dropTableIfExists('tasks')
+    .dropTableIfExists('project_resource');
+};
