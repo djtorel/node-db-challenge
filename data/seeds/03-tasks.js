@@ -1,5 +1,5 @@
 exports.seed = function(knex) {
-  return knex('resources').insert([
+  return knex('tasks').insert([
     {
       description: 'task description',
       notes: 'the task notes',
