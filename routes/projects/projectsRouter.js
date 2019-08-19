@@ -3,6 +3,7 @@ const router = require('express').Router();
 const {
   getProjects,
   getProjectById,
+  addProject,
 } = require('../../data/models/projectsModel');
 const { getTasksByProjectId } = require('../../data/models/tasksModel');
 const { getResourcesByProjectId } = require('../../data/models/resourcesModel');
@@ -35,7 +36,6 @@ router.get('/:id/tasks', async (req, res) => {
 
     res.status(200).json(tasks);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ message: 'Could not retrieve tasks for project' });
   }
 });
@@ -48,6 +48,18 @@ router.get('/:id/resources', async (req, res) => {
     res.status(200).json(resources);
   } catch (err) {
     res.status(500).json({ message: 'Could not get resources for project' });
+  }
+});
+
+router.post('/', async (req, res) => {
+  try {
+    const projectData = req.body;
+    const newProject = await addProject(projectData);
+
+    res.status(201).json(newProject);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Could not add project' });
   }
 });
 
