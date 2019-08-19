@@ -17,7 +17,13 @@ const getProjectById = async project_id => {
   return project ? { ...project, tasks, resources } : null;
 };
 
+const addProject = project =>
+  db('projects')
+    .insert(project)
+    .then(([id]) => getProjectById(id));
+
 module.exports = {
   getProjects,
   getProjectById,
+  addProject,
 };
