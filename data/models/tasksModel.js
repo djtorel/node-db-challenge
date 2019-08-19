@@ -16,13 +16,22 @@ const getTasks = async () =>
     .orderBy('p.id', 'asc')
     .map(mapCompleted);
 
-getTasksByProjectId = project_id =>
+const getTasksByProjectId = project_id =>
   db('tasks as t')
     .select('t.id', 't.description', 't.notes', 't.completed')
     .where({ project_id })
     .map(mapCompleted);
 
+const getTaskById = task_id => db('tasks').where({ id: task_id });
+
+const addTask = (project_id, task) =>
+  db('tasks')
+    .insert({ ...task, project_id })
+    .then(([id]) => getTaskById(id));
+
 module.exports = {
   getTasks,
   getTasksByProjectId,
+  getTaskById,
+  addTask,
 };

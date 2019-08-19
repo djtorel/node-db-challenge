@@ -7,7 +7,7 @@ const mapCompleted = require('../utils/mapCompleted');
 const getProjects = () => db('projects').map(mapCompleted);
 
 const getProjectById = async project_id => {
-  const [project] = await db('projects as p')
+  const [project] = await db('projects')
     .where({ id: project_id })
     .map(mapCompleted);
 
