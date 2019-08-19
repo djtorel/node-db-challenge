@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { getProjects } = require('../../data/models/projectsModel');
 const { getTasksByProjectId } = require('../../data/models/tasksModel');
+const { getResourcesByProjectId } = require('../../data/models/resourcesModel');
 
 router.get('/', async (req, res) => {
   try {
@@ -21,6 +22,17 @@ router.get('/:id/tasks', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Could not retrieve tasks for project' });
+  }
+});
+
+router.get('/:id/resources', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const resources = await getResourcesByProjectId(id);
+
+    res.status(200).json(resources);
+  } catch (err) {
+    res.status(500).json({ message: 'Could not get resources for project' });
   }
 });
 
