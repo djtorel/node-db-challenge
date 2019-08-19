@@ -18,7 +18,7 @@ const getTasks = async () =>
 
 getTasksByProjectId = project_id =>
   db('tasks as t')
-    .select('t.description', 't.notes', 't.completed')
+    .select('t.id', 't.description', 't.notes', 't.completed')
     .where({ project_id })
     .map(mapCompleted);
 
