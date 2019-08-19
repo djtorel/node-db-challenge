@@ -22,7 +22,11 @@ const getTasksByProjectId = project_id =>
     .where({ project_id })
     .map(mapCompleted);
 
-const getTaskById = task_id => db('tasks').where({ id: task_id });
+const getTaskById = task_id =>
+  db('tasks')
+    .where({ id: task_id })
+    .map(mapCompleted)
+    .then(([task]) => task);
 
 const addTask = (project_id, task) =>
   db('tasks')

@@ -10,7 +10,9 @@ const getResourcesByProjectId = project_id =>
     .where({ project_id });
 
 const getResourceById = resource_id =>
-  db('resources').where({ id: resource_id });
+  db('resources')
+    .where({ id: resource_id })
+    .then(([resource]) => resource);
 
 const addResource = resource =>
   db('resources')
