@@ -9,7 +9,17 @@ const getResourcesByProjectId = project_id =>
     .join('resources as r', 'r.id', 'pr.resource_id')
     .where({ project_id });
 
+const getResourceById = resource_id =>
+  db('resources').where({ id: resource_id });
+
+const addResource = resource =>
+  db('resources')
+    .insert(resource)
+    .then(([id]) => getResourceById(id));
+
 module.exports = {
   getResources,
   getResourcesByProjectId,
+  getResourceById,
+  addResource,
 };
