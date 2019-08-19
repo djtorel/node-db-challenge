@@ -1,7 +1,15 @@
 const db = require('../dbConfig');
 
-const getResources = async () => db('resources');
+const getResources = () => db('resources');
+
+const getResourcesByProjectId = project_id =>
+  db('projects as p')
+    .select('r.id', 'r.description', 'r.name')
+    .join('project_resource as pr', 'pr.project_id', 'p.id')
+    .join('resources as r', 'r.id', 'pr.resource_id')
+    .where({ project_id });
 
 module.exports = {
   getResources,
+  getResourcesByProjectId,
 };
