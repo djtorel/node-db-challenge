@@ -5,7 +5,10 @@ const {
   getProjectById,
   addProject,
 } = require('../../data/models/projectsModel');
-const { getTasksByProjectId } = require('../../data/models/tasksModel');
+const {
+  getTasksByProjectId,
+  addTask,
+} = require('../../data/models/tasksModel');
 const { getResourcesByProjectId } = require('../../data/models/resourcesModel');
 
 router.get('/', async (req, res) => {
@@ -60,6 +63,18 @@ router.post('/', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Could not add project' });
+  }
+});
+
+router.post('/:id/tasks', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const taskData = req.body;
+
+    const newTask = await addTask(id, taskData);
+    res.status(201).json(newTask);
+  } catch (err) {
+    res.status(500).json({ message: 'Could not add task' });
   }
 });
 
